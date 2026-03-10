@@ -641,7 +641,7 @@ button:disabled {
     bottom: -15px;
     left: 150px;
     z-index: 5;
-    animation: peekaboo 3s infinite cubic-bezier(0.45, 0, 0.55, 1);
+    animation: peekaboo 5s infinite cubic-bezier(0.45, 0, 0.55, 1);
 }
 
 @keyframes peekaboo {
