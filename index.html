@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Takeaways from Working with AI Agents</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include Three.js for the 3D Intro -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+    <script>console.log("Inline check: THREE is", typeof THREE);</script>
+</head>
+<body>
+
+    <div id="app">
+        <!-- Slides will be injected here -->
+        <div id="slides-container">
+            <!-- Slide 1: Intro -->
+            <section class="slide active" id="slide-1">
+                <div id="canvas-container"></div>
+                <div class="instructions">Click and hold to squish the face. Click 'Next' or press Space to start.</div>
+            </section>
+
+            <!-- Slide 2: Models Matter -->
+            <section class="slide" id="slide-2">
+                <div class="fashion-bg">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" class="fashion-model-img right" alt="Model">
+                </div>
+                <h1 class="maximalist"><span class="highlight-model">MODELS</span><br>MATTER</h1>
+                <p class="subtitle">Pick the one that handles your personality & work style.</p>
+                <div class="model-grid">
+                    <div class="model-card">
+                        <div class="card-front">Style</div>
+                        <div class="card-back">Long, detailed explanations or short, concise answers</div>
+                    </div>
+                    <div class="model-card">
+                        <div class="card-front">Use Case</div>
+                        <div class="card-back">Instruction following, tool calling, creative writing, coding ...</div>
+                    </div>
+                    <div class="model-card">
+                        <div class="card-front">Cost</div>
+                        <div class="card-back">$$$</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: You're a Coach -->
+            <section class="slide" id="slide-3">
+                <h1 class="maximalist">YOU'RE A<br><span class="highlight-coach">COACH</span></h1>
+                <p class="subtitle">LLMs have immense power, but they drift without your guidance.</p>
+                <div class="qwop-interactive">
+                    <div class="track-container" id="track-container">
+                        <div class="character flailing" id="qwop-character">
+                            <div class="torso">
+                                <div class="head"><div class="eye"></div></div>
+                                <div class="arm left-arm">
+                                    <div class="upper-arm">
+                                        <div class="forearm"></div>
+                                    </div>
+                                </div>
+                                <div class="arm right-arm">
+                                    <div class="upper-arm">
+                                        <div class="forearm"></div>
+                                    </div>
+                                </div>
+                                <div class="leg left-leg">
+                                    <div class="thigh">
+                                        <div class="calf"></div>
+                                    </div>
+                                </div>
+                                <div class="leg right-leg">
+                                    <div class="thigh">
+                                        <div class="calf"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ground"></div>
+                    </div>
+                    <div class="coach-controls">
+                        <button id="btn-coach" class="nudge-btn">Coach (Provide Prompt)</button>
+                        <p class="instruction-text">Click to guide the AI so it doesn't fall flat on its face!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Evaluation -->
+            <section class="slide" id="slide-4">
+                <h1 class="maximalist">EVALUATION</h1>
+                <p class="subtitle">If you can't tell what's good or bad, agents don't care.</p>
+                
+                <div class="basilisk-scene">
+                    <div class="cage" id="the-cage">
+                        <div class="bars"></div>
+                        <div class="basilisk-eyes"></div>
+                    </div>
+                    
+                    <div class="kitchen-table">
+                        <div class="table-top"></div>
+                        <div class="table-leg left"></div>
+                        <div class="table-leg right"></div>
+                    </div>
+
+                    <div class="basilisk-snake" id="the-basilisk">
+                        <div class="snake-body"></div>
+                        <div class="snake-head">🐍</div>
+                    </div>
+                </div>
+
+                <div class="eval-interactive">
+                    <div class="eval-buttons">
+                        <button id="btn-release" class="eval-btn">Release the Agent</button>
+                    </div>
+                    <div id="eval-feedback" class="hidden">
+                        <!-- Feedback goes here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Controls -->
+        <div id="controls">
+            <div class="nav-buttons">
+                <button id="prev-btn" disabled>Prev</button>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+
+        <!-- Cloud Transition Overlay -->
+        <div id="cloud-overlay"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

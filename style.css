@@ -1,0 +1,737 @@
+/* style.css */
+:root {
+    --bg-color: #050505;
+    --text-color: #ffffff;
+    --accent-color: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.5);
+    --secondary-bg: #1a1a1a;
+    --transition-speed: 0.6s;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden; /* Important for SPA slide feel */
+}
+
+#app {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#slides-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed) ease-in-out, transform var(--transition-speed) ease-in-out;
+    transform: scale(0.95) translateY(20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+}
+
+/* Typography */
+.maximalist {
+    font-size: 6rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #a0a0a0;
+    max-width: 600px;
+    margin-bottom: 3rem;
+}
+
+/* Controls */
+#controls {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 100;
+}
+
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+button {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+}
+
+button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Cloud Transition Overlay */
+#cloud-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #ffffff 0%, #dddddd 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    transform: scale(0);
+    transition: opacity 1s ease;
+    border-radius: 50%;
+}
+
+#cloud-overlay.active {
+    transform: scale(3);
+    opacity: 1;
+    transition: transform 1s cubic-bezier(0.8, 0, 0.2, 1), opacity 1s ease;
+}
+
+/* --- Slide Specific Styles --- */
+
+/* Slide 1 */
+#canvas-container {
+    width: 100%;
+    max-width: 800px;
+    height: 600px;
+    margin-bottom: 2rem;
+    cursor: grab;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    border-radius: 20px;
+}
+#canvas-container:active {
+    cursor: grabbing;
+}
+.instructions {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Slide 2: Grid */
+.highlight-model {
+    color: #ff2a6d;
+    text-shadow: 0 0 20px rgba(255, 42, 109, 0.5);
+}
+
+.highlight-coach {
+    color: #00ffd8;
+    text-shadow: 0 0 20px rgba(0, 255, 216, 0.5);
+}
+
+.fashion-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.fashion-model-img {
+    position: absolute;
+    top: 50%;
+    height: 80vh;
+    object-fit: cover;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 1.2s ease, filter 1.2s ease, transform 1.2s ease;
+    filter: grayscale(100%);
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+}
+
+.fashion-model-img.left {
+    left: 5%;
+    transform: translateY(-50%) rotate(-10deg) scale(0.9);
+}
+
+.fashion-model-img.right {
+    right: 5%;
+    transform: translateY(-50%) rotate(10deg) scale(0.9);
+}
+
+#slide-2.active .fashion-model-img.left {
+    opacity: 0.35;
+    filter: grayscale(40%);
+    transform: translateY(-50%) rotate(-4deg) scale(1);
+}
+
+#slide-2.active .fashion-model-img.right {
+    opacity: 0.35;
+    filter: grayscale(40%);
+    transform: translateY(-50%) rotate(4deg) scale(1);
+}
+
+.model-grid {
+    display: flex;
+    gap: 2rem;
+    perspective: 1000px;
+}
+
+.model-card {
+    width: 200px;
+    height: 300px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s ease;
+    cursor: pointer;
+}
+
+.model-card:hover {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.card-front {
+    background: var(--secondary-bg);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-back {
+    background: var(--accent-color);
+    transform: rotateY(180deg);
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: white;
+}
+
+/* Slide 2: Transition Animations */
+.model-grid.scattering .model-card:nth-child(1) {
+    transform: translate(-60vw, -40vh) rotate(-720deg) scale(0.2);
+    opacity: 0;
+}
+.model-grid.scattering .model-card:nth-child(2) {
+    transform: translate(0, -80vh) rotate(540deg) scale(0.2);
+    opacity: 0;
+}
+.model-grid.scattering .model-card:nth-child(3) {
+    transform: translate(60vw, -40vh) rotate(720deg) scale(0.2);
+    opacity: 0;
+}
+
+/* Slide 3: Glitch Animation */
+@keyframes glitch-anim {
+    0% { clip-path: inset(20% 0 80% 0); transform: translate(-4px, 2px); filter: drop-shadow(4px 0 rgba(255,0,0,0.8)) drop-shadow(-4px 0 rgba(0,255,255,0.8)); }
+    20% { clip-path: inset(80% 0 5% 0); transform: translate(4px, -2px); filter: drop-shadow(-4px 0 rgba(255,0,0,0.8)) drop-shadow(4px 0 rgba(0,255,255,0.8)); }
+    40% { clip-path: inset(40% 0 40% 0); transform: translate(-4px, -4px); filter: drop-shadow(4px 0 rgba(255,0,0,0.8)) drop-shadow(-4px 0 rgba(0,255,255,0.8)); }
+    60% { clip-path: inset(5% 0 90% 0); transform: translate(4px, 4px); filter: drop-shadow(-4px 0 rgba(255,0,0,0.8)) drop-shadow(4px 0 rgba(0,255,255,0.8)); }
+    80% { clip-path: inset(60% 0 20% 0); transform: translate(-4px, 2px); filter: drop-shadow(4px 0 rgba(255,0,0,0.8)) drop-shadow(-4px 0 rgba(0,255,255,0.8)); }
+    100% { clip-path: inset(0 0 0 0); transform: translate(0); filter: none; }
+}
+
+.glitching {
+    animation: glitch-anim 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    position: relative;
+    z-index: 1000;
+}
+
+/* Slide 3: QWOP Animation */
+.qwop-interactive {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.track-container {
+    width: 100%;
+    height: 250px;
+    background: #111;
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background: #222;
+    border-top: 2px dashed #444;
+}
+
+.character {
+    position: absolute;
+    bottom: 40px;
+    left: 10%;
+    width: 20px;
+    height: 100px;
+    transition: transform 0.5s ease;
+    z-index: 10;
+}
+
+.head {
+    position: absolute;
+    top: -20px;
+    left: 1px;
+    width: 18px;
+    height: 18px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-glow);
+    transform-origin: bottom center;
+}
+
+.eye {
+    position: absolute;
+    top: 5px;
+    right: 3px;
+    width: 4px;
+    height: 4px;
+    background: #000;
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.torso {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 50px;
+    background: var(--accent-color);
+    border-radius: 10px;
+    transform-origin: bottom center;
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.leg {
+    position: absolute;
+    top: 40px;
+    left: 5px;
+}
+
+.thigh {
+    position: relative;
+    width: 10px;
+    height: 35px;
+    background: #ddd;
+    border-radius: 5px;
+    transform-origin: top center;
+}
+
+.calf {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 10px;
+    height: 35px;
+    background: #bbb;
+    border-radius: 5px;
+    transform-origin: top center;
+}
+
+.right-leg .thigh { background: #999; }
+.right-leg .calf { background: #777; }
+
+/* Arms */
+.arm {
+    position: absolute;
+    top: 6px;
+}
+.left-arm  { left: -10px; }
+.right-arm { left: 20px; }
+
+.upper-arm {
+    position: relative;
+    width: 8px;
+    height: 26px;
+    background: var(--accent-color);
+    border-radius: 4px;
+    transform-origin: top center;
+}
+.right-arm .upper-arm { background: #4fa8e8; }
+
+.forearm {
+    position: absolute;
+    top: 22px;
+    left: 0;
+    width: 8px;
+    height: 22px;
+    background: #7ec8f0;
+    border-radius: 4px;
+    transform-origin: top center;
+}
+.right-arm .forearm { background: #5ab0d8; }
+
+/* Flailing (Default AI without coach) - JS-driven random twitches */
+.flailing .head {
+    transition: transform 0.2s ease-in-out;
+}
+.flailing .torso {
+    transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.flailing .thigh {
+    transition: transform 0.12s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+.flailing .calf {
+    transition: transform 0.18s ease-out;
+}
+.flailing .upper-arm {
+    transition: transform 0.13s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+.flailing .forearm {
+    transition: transform 0.16s ease-out;
+}
+
+/* Falling down — transform set via inline style in JS */
+.fallen {
+    transition: transform 0.5s cubic-bezier(0.5, 0, 1, 1);
+}
+
+/* Running (Coached AI) */
+@keyframes run-bounce {
+    0%, 100% { bottom: 40px; }
+    40%       { bottom: 52px; }
+    60%       { bottom: 48px; }
+}
+@keyframes run-torso {
+    0%   { transform: rotate(18deg); }
+    30%  { transform: rotate(22deg); }
+    60%  { transform: rotate(14deg); }
+    100% { transform: rotate(18deg); }
+}
+@keyframes run-thigh-l {
+    0%   { transform: rotate(-55deg); }
+    50%  { transform: rotate(65deg);  }
+    100% { transform: rotate(-55deg); }
+}
+@keyframes run-calf-l {
+    0%   { transform: rotate(5deg);  }
+    40%  { transform: rotate(90deg); }
+    100% { transform: rotate(5deg);  }
+}
+@keyframes run-thigh-r {
+    0%   { transform: rotate(65deg);  }
+    50%  { transform: rotate(-55deg); }
+    100% { transform: rotate(65deg);  }
+}
+@keyframes run-calf-r {
+    0%   { transform: rotate(90deg); }
+    50%  { transform: rotate(5deg);  }
+    100% { transform: rotate(90deg); }
+}
+
+/* Arms swing opposite to legs: left arm pairs with right leg */
+@keyframes run-upper-arm-l {
+    0%   { transform: rotate(50deg);  }
+    50%  { transform: rotate(-40deg); }
+    100% { transform: rotate(50deg);  }
+}
+@keyframes run-forearm-l {
+    0%   { transform: rotate(60deg); }
+    50%  { transform: rotate(10deg); }
+    100% { transform: rotate(60deg); }
+}
+@keyframes run-upper-arm-r {
+    0%   { transform: rotate(-40deg); }
+    50%  { transform: rotate(50deg);  }
+    100% { transform: rotate(-40deg); }
+}
+@keyframes run-forearm-r {
+    0%   { transform: rotate(10deg); }
+    50%  { transform: rotate(60deg); }
+    100% { transform: rotate(10deg); }
+}
+
+@keyframes run-head {
+    0%   { transform: rotate(-8deg);  }
+    25%  { transform: rotate(4deg);   }
+    50%  { transform: rotate(-8deg);  }
+    75%  { transform: rotate(-12deg); }
+    100% { transform: rotate(-8deg);  }
+}
+
+.running { animation: run-bounce 0.5s infinite ease-in-out; }
+.running .head         { animation: run-head      0.5s infinite ease-in-out; }
+.running .torso { animation: run-torso 0.5s infinite ease-in-out; }
+.running .left-leg .thigh { animation: run-thigh-l 0.5s infinite ease-in-out; }
+.running .left-leg .calf { animation: run-calf-l 0.5s infinite ease-in-out; }
+.running .right-leg .thigh { animation: run-thigh-r 0.5s infinite ease-in-out; }
+.running .right-leg .calf { animation: run-calf-r 0.5s infinite ease-in-out; }
+.running .left-arm .upper-arm  { animation: run-upper-arm-l 0.5s infinite ease-in-out; }
+.running .left-arm .forearm    { animation: run-forearm-l   0.5s infinite ease-in-out; }
+.running .right-arm .upper-arm { animation: run-upper-arm-r 0.5s infinite ease-in-out; }
+.running .right-arm .forearm   { animation: run-forearm-r   0.5s infinite ease-in-out; }
+
+.coach-controls {
+    text-align: center;
+}
+
+.nudge-btn {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.nudge-btn:hover {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+.nudge-btn:active {
+    transform: scale(0.95);
+}
+
+.instruction-text {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* Slide 4: Evaluation */
+.eval-interactive {
+    max-width: 600px;
+    width: 100%;
+}
+
+.code-snippet {
+    background: #1e1e1e;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: left;
+    margin-bottom: 2rem;
+    font-family: monospace;
+    font-size: 1.1rem;
+    border: 1px solid #333;
+}
+
+.eval-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.eval-btn {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+}
+
+#btn-bad:hover {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+#btn-good:hover {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+#eval-feedback {
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    transition: opacity 0.3s;
+}
+
+#eval-feedback.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Slide 4: Evaluation - Basilisk Animation */
+.basilisk-scene {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 120px;
+    margin: 0 auto 2rem auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.cage {
+    width: 100px;
+    height: 100px;
+    background: #1a1a1a;
+    border: 3px solid #444;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    z-index: 3;
+    overflow: hidden;
+    box-shadow: inset 0 0 20px #000;
+}
+
+.cage .bars {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 15px,
+      #666 15px,
+      #666 22px
+    );
+    z-index: 4;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cage.open .bars {
+    transform: translateY(-100%);
+}
+
+.basilisk-eyes {
+    position: absolute;
+    top: 40px;
+    left: 30px;
+    width: 40px;
+    height: 12px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+    transition: opacity 0.3s;
+}
+
+.basilisk-eyes::before,
+.basilisk-eyes::after {
+    content: '';
+    width: 12px;
+    height: 8px;
+    background: #ff3333;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #ff0000;
+    animation: blink 4s infinite;
+}
+
+@keyframes blink {
+    0%, 96%, 100% { transform: scaleY(1); opacity: 1; }
+    98% { transform: scaleY(0.1); opacity: 0.5; }
+}
+
+.kitchen-table {
+    width: 160px;
+    height: 70px;
+    position: relative;
+    z-index: 2;
+}
+
+.table-top {
+    width: 100%;
+    height: 12px;
+    background: #8b5a2b;
+    border-radius: 4px;
+    position: absolute;
+    top: 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.table-leg {
+    width: 12px;
+    height: 58px;
+    background: #5c3a18;
+    position: absolute;
+    top: 12px;
+}
+
+.table-leg.left { left: 20px; }
+.table-leg.right { right: 20px; }
+
+.basilisk-snake {
+    position: absolute;
+    bottom: 0;
+    left: 40px; /* Hidden behind cage initially */
+    height: 40px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    transition: left 2s ease-in-out;
+}
+
+.snake-head {
+    font-size: 2.5rem;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 5px rgba(0,255,0,0.5));
+    transform: scaleX(-1); /* Face right */
+    line-height: 1;
+}
+
+.snake-body {
+    position: absolute;
+    right: 25px; /* Attach to head */
+    top: 15px;
+    width: 0;
+    height: 14px;
+    background: linear-gradient(90deg, #114b11, #228b22);
+    border-radius: 10px 0 0 10px;
+    z-index: 1;
+    transition: width 2s ease-in-out;
+}
+
+.basilisk-snake.moving {
+    left: calc(100% - 130px); /* Move to next to table */
+    bottom: 0; /* Stays on floor */
+}
+
+.basilisk-snake.moving .snake-body {
+    width: 180px; /* Stretch out the body */
+}
