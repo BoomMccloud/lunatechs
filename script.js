@@ -339,47 +339,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 4. Slide 4: Evaluation Logic ---
-    const btnRelease = document.getElementById('btn-release');
-    const evalFeedback = document.getElementById('eval-feedback');
-    const cage = document.getElementById('the-cage');
-    const basilisk = document.getElementById('the-basilisk');
-    const eyes = document.querySelector('.basilisk-eyes');
-
-    if (btnRelease) {
-        btnRelease.addEventListener('click', () => {
-            evalFeedback.classList.remove('hidden');
-            evalFeedback.innerHTML = "<span style='color: #ef4444;'>Without your evaluation, the agent slithers out of control.</span>";
-            evalFeedback.style.backgroundColor = "rgba(239, 68, 68, 0.1)";
-            evalFeedback.style.border = "1px solid #ef4444";
-            
-            // Trigger animation
-            if (cage && basilisk && eyes) {
-                cage.classList.add('open');
-                eyes.style.opacity = '0';
-                setTimeout(() => {
-                    basilisk.classList.add('moving');
-                }, 500);
-            }
-            
-            btnRelease.disabled = true;
-            btnRelease.textContent = "Agent Released";
-        });
-        
-        // Reset when leaving slide
-        const observerEval = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.target.id === 'slide-4' && !mutation.target.classList.contains('active')) {
-                    evalFeedback.classList.add('hidden');
-                    if (cage && basilisk && eyes) {
-                        cage.classList.remove('open');
-                        eyes.style.opacity = '1';
-                        basilisk.classList.remove('moving');
-                    }
-                    btnRelease.disabled = false;
-                    btnRelease.textContent = "Release the Agent";
-                }
-            });
-        });
-        observerEval.observe(document.getElementById('slide-4'), { attributes: true, attributeFilter: ['class'] });
-    }
+    // Animation is handled entirely via CSS keyframes.
 });
