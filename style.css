@@ -638,7 +638,7 @@ button:disabled {
 
 .cockatrice {
     position: absolute;
-    bottom: 10px;
+    bottom: -10px;
     left: 155px; /* Shifted 75px to the right */
     z-index: 5;
     animation: peekaboo 3s infinite cubic-bezier(0.45, 0, 0.55, 1);
