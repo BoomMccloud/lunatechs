@@ -180,25 +180,27 @@ document.addEventListener('DOMContentLoaded', () => {
             camera.lookAt(0, 0, 0);
 
             // Click-to-squish interaction
-            container.addEventListener('mousedown', () => headGroup.scale.set(4.8, 3.2, 4.8));
-            container.addEventListener('mouseup', () => headGroup.scale.set(4, 4, 4));
-            container.addEventListener('mouseleave', () => headGroup.scale.set(4, 4, 4));
+            let squishTarget = { x: 4, y: 4, z: 4 };
+            container.addEventListener('mousedown', () => { squishTarget = { x: 4.8, y: 3.2, z: 4.8 }; });
+            container.addEventListener('mouseup',   () => { squishTarget = { x: 4,   y: 4,   z: 4   }; });
+            container.addEventListener('mouseleave',() => { squishTarget = { x: 4,   y: 4,   z: 4   }; });
 
             function animate() {
                 requestAnimationFrame(animate);
-                
+
                 // Smooth, continuous, pseudo-random rotation using time
                 const time = Date.now() * 0.001;
                 const targetRotX = Math.sin(time * 0.5) * 0.3 + Math.cos(time * 0.8) * 0.2;
                 const targetRotY = Math.cos(time * 0.4) * 0.4 + Math.sin(time * 0.7) * 0.3;
-                
+
                 headGroup.rotation.y += (targetRotY - headGroup.rotation.y) * 0.05;
                 headGroup.rotation.x += (targetRotX - headGroup.rotation.x) * 0.05;
-                
-                headGroup.scale.x += (4 - headGroup.scale.x) * 0.1;
-                headGroup.scale.y += (4 - headGroup.scale.y) * 0.1;
-                headGroup.scale.z += (4 - headGroup.scale.z) * 0.1;
-                
+
+                // Slow lerp toward squish target (0.03 = slow and squishy)
+                headGroup.scale.x += (squishTarget.x - headGroup.scale.x) * 0.03;
+                headGroup.scale.y += (squishTarget.y - headGroup.scale.y) * 0.03;
+                headGroup.scale.z += (squishTarget.z - headGroup.scale.z) * 0.03;
+
                 renderer.render(scene, camera);
             }
             animate();
