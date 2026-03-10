@@ -638,16 +638,16 @@ button:disabled {
 
 .cockatrice {
     position: absolute;
-    bottom: -10px;
-    left: 155px; /* Shifted 75px to the right */
+    bottom: -15px;
+    left: 150px;
     z-index: 5;
     animation: peekaboo 3s infinite cubic-bezier(0.45, 0, 0.55, 1);
 }
 
 @keyframes peekaboo {
-    0%, 20% { left: 155px; } 
-    45%, 70% { left: 360px; } 
-    90%, 100% { left: 155px; } 
+    0%, 20% { left: 150px; }
+    45%, 70% { left: 360px; }
+    90%, 100% { left: 150px; }
 }
 
 .cockatrice-img {
